@@ -1,9 +1,20 @@
 from elasticsearch import Elasticsearch
+import logging
+
+logger = logging.getLogger(__name__)
 
 es = Elasticsearch("http://elasticsearch:9200")
 
+INDEX_NAME = "publications"
+
+def ensure_index():
+    if not es.indices.exists(index=INDEX_NAME):
+        es.indices.create(index=INDEX_NAME)
+        logger.info("Created Elasticsearch index: publications")
 
 def index_publication(publication):
+    ensure_index()
+
     es.index(
         index="publications",
         id=publication.id,
@@ -17,6 +28,8 @@ def index_publication(publication):
 
 
 def search_publications(query):
+    logger.info(f"Searching publications with query: {query}")
+    
     response = es.search(
         index="publications",
         query={
@@ -27,4 +40,7 @@ def search_publications(query):
         }
     )
 
-    return [hit["_source"] for hit in response["hits"]["hits"]]
+    return [
+        {"id": hit["_id"], **hit["_source"]}
+        for hit in response["hits"]["hits"]
+    ]

@@ -1,12 +1,16 @@
 from flask import Flask
+from flask_cors import CORS
 from .extensions import db, migrate
 from .config import Config
-from .errors import register_error_handlers
-
+from .errors.handlers import register_error_handlers
+from app.utils.logging import configure_logging
 
 def create_app(config_class=Config):
     app = Flask(__name__)
+    configure_logging()
     app.config.from_object(config_class)
+
+    CORS(app, origins=["http://localhost:5173"])
 
     # Initialize extensions
     db.init_app(app)

@@ -8,3 +8,4 @@ flask-marshmallow==1.2.0
 pytest==8.0.2
 pytest-flask==1.3.0
 elasticsearch==8.12.1
+flask_cors==4.0.0

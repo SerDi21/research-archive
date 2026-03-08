@@ -1,4 +1,4 @@
-from app.models import Publication
+from app.models.publication import Publication
 from app.extensions import db
 
 

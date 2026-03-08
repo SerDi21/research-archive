@@ -1,7 +1,9 @@
-from app.models import Publication
+from app.models.publication import Publication
 from app.extensions import db
-from app.search import index_publication
+from app.services.search_service import index_publication
+import logging
 
+logger = logging.getLogger(__name__)
 
 def get_all_publications():
     return Publication.query.all()
@@ -12,10 +14,12 @@ def get_publication(publication_id):
 
 
 def create_publication(data):
+    logger.info("Creating publication")
     publication = Publication(**data)
     db.session.add(publication)
     db.session.commit()
     index_publication(publication)
+    logger.info(f"Publication created with ID {publication.id}")
     return publication
 
 

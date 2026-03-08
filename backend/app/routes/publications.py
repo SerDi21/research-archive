@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
 from marshmallow import ValidationError
-from app.search import search_publications
+from app.services.search_service import search_publications
 
-from app.schemas import PublicationSchema
+from app.schemas.publication_schema import PublicationSchema
 from app.services.publication_service import (
     get_all_publications,
     get_publication,
