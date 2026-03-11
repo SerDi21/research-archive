@@ -1,40 +1,20 @@
-import { useEffect, useState } from "react";
-import {
-  getPublications,
-  deletePublication
-} from "../api/publications";
-
+import { deletePublication } from "../api/publications";
+import { useState } from "react";
 import EditPublication from "./EditPublication";
 
-export default function PublicationList() {
+export default function PublicationList({ publications, refresh }) {
 
-  const [publications, setPublications] = useState([]);
   const [editingId, setEditingId] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const fetchData = async () => {
-    setLoading(true);
-    const response = await getPublications();
-    setPublications(response.data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this publication?"
     );
     if (!confirmDelete) return;
-    await deletePublication(id);
-    fetchData();
-  };
 
-  if (loading) {
-    return <p>Loading publications...</p>;
-  }
+    await deletePublication(id);
+    refresh();
+  };
 
   return (
     <div>
@@ -49,7 +29,7 @@ export default function PublicationList() {
               publication={pub}
               onUpdated={() => {
                 setEditingId(null);
-                fetchData();
+                refresh();
               }}
             />
 
@@ -58,9 +38,7 @@ export default function PublicationList() {
             <>
               <h3>{pub.title}</h3>
 
-              <span className={pub.published ? "badge published" : "badge draft"}>
-                {pub.published ? "Published" : "Draft"}
-              </span>
+              <p><strong>Authors:</strong> {pub.authors}</p>
 
               <p>{pub.abstract}</p>
 

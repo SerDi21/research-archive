@@ -11,16 +11,34 @@ body {
 
 /* Layout */
 
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 40px 20px;
-}
-
 h1 {
   font-size: 32px;
   margin-bottom: 30px;
   text-align: center;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  background: white;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  z-index: 1000;
+}
+
+.topbar h1 {
+  margin: 0;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 /* Cards */
@@ -83,6 +101,8 @@ button {
 button.primary {
   background: #2563eb;
   color: white;
+  height: 36px;
+  padding: 0 14px;
 }
 
 button.primary:hover {
@@ -112,32 +132,52 @@ button.secondary:hover {
 
 /* Search bar */
 
-.search-bar {
+.searchbar {
+  margin: 0;
   display: flex;
-  gap: 10px;
-  margin-bottom: 30px;
+  align-items: center;
+  position: relative;
+  top: 5px;
 }
 
-.search-bar input {
-  flex: 1;
-}
-
-.badge {
-  display: inline-block;
-  padding: 4px 8px;
-  font-size: 12px;
+.searchbar input {
+  height: 36px;
+  padding: 0 12px;
   border-radius: 6px;
-  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
-.badge.published {
-  background: #dcfce7;
-  color: #166534;
+/* modal */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.badge.draft {
-  background: #fef3c7;
-  color: #92400e;
+.modal {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  width: 400px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.content {
+  padding: 30px;
+  margin-top: 20px;
 }
 
 /* Responsive */

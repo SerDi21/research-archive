@@ -28,6 +28,7 @@ def update_publication(publication, data):
         setattr(publication, key, value)
 
     db.session.commit()
+    index_publication(publication)
     return publication
 
 
